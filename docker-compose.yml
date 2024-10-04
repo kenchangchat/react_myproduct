@@ -1,0 +1,40 @@
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+ 
+  backend:
+    build:
+      context: ./server_node
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      DB_HOST: db_sql
+      DB_USER: root
+      DB_PASS: ""
+      DB_NAME: db_products
+    depends_on:
+      db_sql:
+        condition: service_healthy
+
+  db_sql:
+    image: mysql:8       
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: db_products
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "db_sql"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
