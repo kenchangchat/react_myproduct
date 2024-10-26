@@ -114,7 +114,7 @@ function ProductList() {
     const updateDeleteProduct = (i) => {
         Swal.fire({
         title: "ยืนยัน",
-        text: "คุณต้องการลบข้อมูลนี้ ใช่หรือไม่? test1",
+        text: "คุณต้องการลบข้อมูลนี้ ใช่หรือไม่? test1 update test2",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
